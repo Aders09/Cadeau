@@ -15,8 +15,8 @@ def load_image_base64(image_path):
 
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
-    page_title="★ Tadeau d'anniversaire ★",
-    page_icon="",
+    page_title="★ Ton cadeau d'anniversaire ★",
+    page_icon="🍂",
     layout="centered"
 )
 
@@ -150,7 +150,7 @@ def falling_leaves():
 
 # --- PLAYLIST ---
 playlist = {
-    "The Sms - Back to the old house": {"audio": "backto.mp3", "image": "backto.jpeg"},
+    "The Smiths - Back to the old house": {"audio": "backto.mp3", "image": "backto.jpeg"},
     "ABBA - Dancing Queen": {"audio": "queen.mp3", "image": "queen.jpg"},
     "She & Him - I thought I saw your face today": {"audio": "ithought.mp3", "image": "ithought.jpeg"},
     "TV Girl - Better in the dark": {"audio": "dark.mp3", "image": "dark.jpeg"},
