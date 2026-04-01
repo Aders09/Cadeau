@@ -16,7 +16,7 @@ def load_image_base64(image_path):
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
     page_title="★ Ton cadeau d'anniversaire ★",
-    page_icon="🍂",
+    page_icon="",
     layout="centered"
 )
 
