@@ -3,6 +3,7 @@ import random
 import time
 from datetime import datetime
 import base64
+import os
 from pathlib import Path
 
 # --- FONCTION POUR CHARGER L'IMAGE ---
@@ -20,8 +21,9 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- CHARGEMENT DU FOND ---
-bg_img_path = Path("fond.jpeg") 
+# --- CHARGEMENT DU FOND (Chemin sécurisé) ---
+current_dir = os.path.dirname(__file__)
+bg_img_path = os.path.join(current_dir, "fond.jpeg") 
 bg_data = load_image_base64(bg_img_path)
 
 if bg_data:
@@ -37,18 +39,16 @@ if bg_data:
     """
     st.markdown(bg_style, unsafe_allow_html=True)
 
-# --- STYLE CSS AVEC POLICE "BOOKISH / RETRO" ---
+# --- STYLE CSS ---
 st.markdown("""
     <style>
     header, footer, .stDeployButton, #stDecoration {visibility: hidden;}
 
-    /* Couleur de base : Passage à un marron plus clair et chaud (#9D6B53) */
     .stApp {
         color: #9D6B53; 
         font-family: 'Georgia', 'Times New Roman', serif;
     }
 
-    /* Titres principaux : On garde le marron foncé pour le contraste */
     h1, h2, h3 {
         color: #743014 !important;
         font-family: 'Georgia', serif;
@@ -56,17 +56,15 @@ st.markdown("""
         letter-spacing: 1px;
     }
 
-    /* Textes secondaires, labels et paragraphes éclaircis */
     p, span, label, li, h4 {
         color: #9D6B53 !important;
         font-family: 'Georgia', serif;
     }
 
-    /* --- BOUTONS --- */
     .stButton>button {
         width: 100%;
         background-color: #E8D1A7 !important; 
-        color: #743014 !important; /* Texte bouton foncé pour lisibilité sur fond clair */
+        color: #743014 !important;
         border-radius: 12px;
         font-family: 'Georgia', serif;
         font-weight: bold;
@@ -80,13 +78,11 @@ st.markdown("""
         transform: translateY(-2px);
     }
 
-    /* Images */
     [data-testid="stImage"] img {
         border: 3px solid #84592B !important;
         border-radius: 8px !important;
     }
 
-    /* Onglets stylisés et éclaircis */
     .stTabs [data-baseweb="tab-list"] {
         gap: 15px;
         background-color: rgba(232, 209, 167, 0.6); 
@@ -95,22 +91,20 @@ st.markdown("""
         border-radius: 15px;
     }
     .stTabs [data-baseweb="tab"] {
-        color: #743014 !important; /* Marron foncé pour les onglets */
+        color: #743014 !important;
         font-family: 'Georgia', serif;
         font-weight: bold;
     }
     
-    /* Couleur du texte dans le sélecteur */
     div[data-baseweb="select"] > div {
         color: #743014 !important;
     }
 
-    /* Boîte de message style "Lettre ancienne" */
     .message-box {
         padding: 30px;
         border: 1px solid #84592B;
         background-color: rgba(255, 252, 240, 0.95); 
-        color: #743014; /* Texte du message en foncé pour la lecture */
+        color: #743014;
         font-size: 1.2rem;
         font-style: italic;
         text-align: center;
@@ -119,7 +113,6 @@ st.markdown("""
         box-shadow: 8px 8px 0px rgba(157, 145, 103, 0.2); 
     }
 
-    /* Animation des feuilles */
     @keyframes fall {
         0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
         100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
@@ -135,7 +128,6 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- ANIMATION ---
 def falling_leaves():
     leaf_icons = ["🍂", "🍁", "🍃"]
     html_leaves = ""
@@ -148,7 +140,6 @@ def falling_leaves():
         html_leaves += f'<div class="leaf" style="left:{left}%; font-size:{size}px; animation-duration:{duration}s; animation-delay:{delay}s;">{icon}</div>'
     st.markdown(html_leaves, unsafe_allow_html=True)
 
-# --- PLAYLIST ---
 playlist = {
     "The Smiths - Back to the old house": {"audio": "backto.mp3", "image": "backto.jpeg"},
     "ABBA - Dancing Queen": {"audio": "queen.mp3", "image": "queen.jpg"},
@@ -156,17 +147,13 @@ playlist = {
     "TV Girl - Better in the dark": {"audio": "dark.mp3", "image": "dark.jpeg"},
     "girl in red - Better in the dark": {"audio": "october.mp3", "image": "october.png"},
     "The Police - Every breath you take": {"audio": "breath.mp3", "image": "breath.jpeg"},
-    
 }
-
-# --- CONTENU ---
 
 st.markdown("<h2 style='text-align:center; color:#743014; text-shadow: 1px 1px 2px #E8D1A7;'>★ Ton cadeau d'anniversaire ★</h2>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["✨ Les réfs", "🎵 Les sons", "✉️ La lettre"])
 
 with tab1:
-    # Le titre "Les rèfs!!!" est maintenant plus clair et doux
     st.markdown("<h3 style='text-align:center; color:#9D6B53;'>Appuie sur le bouton pour faire apparaître une réf...</h3>", unsafe_allow_html=True)
     if st.button('Les rèfs!!!'):
         falling_leaves()
@@ -175,7 +162,6 @@ with tab1:
 
 with tab2:
     st.markdown("### 🎧 Les Sons qui me font penser à toi")
-    
     if "musique_index" not in st.session_state:
         st.session_state.musique_index = list(playlist.keys())[0]
 
@@ -183,14 +169,11 @@ with tab2:
         st.session_state.musique_index = random.choice(list(playlist.keys()))
 
     choix = st.selectbox("Choisis ton morceau :", list(playlist.keys()), index=list(playlist.keys()).index(st.session_state.musique_index))
-    
     st.divider()
-    
     col1, col2 = st.columns([1, 2])
     with col1:
         st.image(playlist[choix]["image"], width=150)
     with col2:
-        # Titre du morceau éclairci
         st.markdown(f"<h4 style='margin-top:0; color:#9D6B53;'>{choix}</h4>", unsafe_allow_html=True)
         st.audio(playlist[choix]["audio"])
 
@@ -198,20 +181,13 @@ with tab3:
     st.markdown(f"""
     <div class="message-box" style="text-align: left; font-style: normal; line-height: 1.6;">
     Sana,<br><br>
-    Joyeux Anniversaire ! J'ai crée ce site pour toi, pour ton anniversaire, mais tu pourras (j'éspère) le garder toute ta vie. J'ai essayé de le créer à ton image. Il ce peut que je le modifie dans le futur si je trouve le temps. Bref Bon anniversaire !!!!"
+    Joyeux Anniversaire ! J'ai créé ce site pour toi, pour ton anniversaire, mais tu pourras (j'espère) le garder toute ta vie. J'ai essayé de le créer à ton image. Il se peut que je le modifie dans le futur si je trouve le temps. Bref Bon anniversaire !!!!
     </div>
     """, unsafe_allow_html=True)
 
-# --- PIED DE PAGE ---
 st.markdown(f"""
     <div style='text-align: center; margin-top: 50px; opacity: 0.8;'>
-        <span style='background-color: rgba(232, 209, 167, 0.7); 
-                     padding: 10px 20px; 
-                     border-radius: 5px; 
-                     color: #9D6B53; 
-                     font-size: 0.85rem; 
-                     font-family: serif;
-                     border: 1px solid #84592B;'>
+        <span style='background-color: rgba(232, 209, 167, 0.7); padding: 10px 20px; border-radius: 5px; color: #9D6B53; font-size: 0.85rem; font-family: serif; border: 1px solid #84592B;'>
             Manuscrit avec ❤️ par Adam | {datetime.now().strftime('%d/%m/%Y')}
         </span>
     </div>
