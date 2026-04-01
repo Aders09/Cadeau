@@ -3,6 +3,7 @@ import random
 import time
 from datetime import datetime
 import base64
+import os
 from pathlib import Path
 
 # --- FONCTION POUR CHARGER L'IMAGE ---
@@ -21,7 +22,8 @@ st.set_page_config(
 )
 
 # --- CHARGEMENT DU FOND ---
-bg_img_path = Path("fond.jpeg") 
+current_dir = os.path.dirname(__file__)
+bg_img_path = os.path.join(current_dir, "Fond.jpeg")
 bg_data = load_image_base64(bg_img_path)
 
 if bg_data:
@@ -42,13 +44,13 @@ st.markdown("""
     <style>
     header, footer, .stDeployButton, #stDecoration {visibility: hidden;}
 
-    /* Couleur de base : Passage à un marron plus clair et chaud (#9D6B53) */
+    /* Couleur de base : Marron bronze */
     .stApp {
         color: #9D6B53; 
         font-family: 'Georgia', 'Times New Roman', serif;
     }
 
-    /* Titres principaux : On garde le marron foncé pour le contraste */
+    /* Titres principaux */
     h1, h2, h3 {
         color: #743014 !important;
         font-family: 'Georgia', serif;
@@ -56,7 +58,7 @@ st.markdown("""
         letter-spacing: 1px;
     }
 
-    /* Textes secondaires, labels et paragraphes éclaircis */
+    /* Textes secondaires */
     p, span, label, li, h4 {
         color: #9D6B53 !important;
         font-family: 'Georgia', serif;
@@ -66,7 +68,7 @@ st.markdown("""
     .stButton>button {
         width: 100%;
         background-color: #E8D1A7 !important; 
-        color: #743014 !important; /* Texte bouton foncé pour lisibilité sur fond clair */
+        color: #743014 !important;
         border-radius: 12px;
         font-family: 'Georgia', serif;
         font-weight: bold;
@@ -86,7 +88,7 @@ st.markdown("""
         border-radius: 8px !important;
     }
 
-    /* Onglets stylisés et éclaircis */
+    /* Onglets stylisés */
     .stTabs [data-baseweb="tab-list"] {
         gap: 15px;
         background-color: rgba(232, 209, 167, 0.6); 
@@ -95,22 +97,22 @@ st.markdown("""
         border-radius: 15px;
     }
     .stTabs [data-baseweb="tab"] {
-        color: #743014 !important; /* Marron foncé pour les onglets */
+        color: #743014 !important;
         font-family: 'Georgia', serif;
         font-weight: bold;
     }
     
-    /* Couleur du texte dans le sélecteur */
+    /* Sélecteur */
     div[data-baseweb="select"] > div {
         color: #743014 !important;
     }
 
-    /* Boîte de message style "Lettre ancienne" */
+    /* Boîte de message */
     .message-box {
         padding: 30px;
         border: 1px solid #84592B;
         background-color: rgba(255, 252, 240, 0.95); 
-        color: #743014; /* Texte du message en foncé pour la lecture */
+        color: #743014;
         font-size: 1.2rem;
         font-style: italic;
         text-align: center;
@@ -156,7 +158,6 @@ playlist = {
     "TV Girl - Better in the dark": {"audio": "dark.mp3", "image": "dark.jpeg"},
     "girl in red - Better in the dark": {"audio": "october.mp3", "image": "october.png"},
     "The Police - Every breath you take": {"audio": "breath.mp3", "image": "breath.jpeg"},
-    
 }
 
 # --- CONTENU ---
@@ -166,7 +167,6 @@ st.markdown("<h2 style='text-align:center; color:#743014; text-shadow: 1px 1px 2
 tab1, tab2, tab3 = st.tabs(["✨ Les réfs", "🎵 Les sons", "✉️ La lettre"])
 
 with tab1:
-    # Le titre "Les rèfs!!!" est maintenant plus clair et doux
     st.markdown("<h3 style='text-align:center; color:#9D6B53;'>Appuie sur le bouton pour faire apparaître une réf...</h3>", unsafe_allow_html=True)
     if st.button('Les rèfs!!!'):
         falling_leaves()
@@ -190,7 +190,6 @@ with tab2:
     with col1:
         st.image(playlist[choix]["image"], width=150)
     with col2:
-        # Titre du morceau éclairci
         st.markdown(f"<h4 style='margin-top:0; color:#9D6B53;'>{choix}</h4>", unsafe_allow_html=True)
         st.audio(playlist[choix]["audio"])
 
@@ -198,7 +197,7 @@ with tab3:
     st.markdown(f"""
     <div class="message-box" style="text-align: left; font-style: normal; line-height: 1.6;">
     Sana,<br><br>
-    Joyeux Anniversaire ! J'ai crée ce site pour toi, pour ton anniversaire, mais tu pourras (j'éspère) le garder toute ta vie. J'ai essayé de le créer à ton image. Il ce peut que je le modifie dans le futur si je trouve le temps. Bref Bon anniversaire !!!!"
+    Joyeux Anniversaire ! J'ai créé ce site pour toi, pour ton anniversaire, mais tu pourras (j'espère) le garder toute ta vie. J'ai essayé de le créer à ton image. Il se peut que je le modifie dans le futur si je trouve le temps. Bref Bon anniversaire !!!!
     </div>
     """, unsafe_allow_html=True)
 
